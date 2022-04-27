@@ -30,34 +30,37 @@
                         <p class="font-italic mb-0">{{ profile.description }}</p>
                     </div>
                 </div>
-                <div class="py-4 px-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h5 class="mb-0">Recent articles</h5>
-                    </div>
-                    {% if not articles %}
-                        <p>No articles yet..</p>
-                    {% else %}
-                        <div class="row">
-                            {% for article in articles %}
-                                <div class="card" style="width: 18rem; margin: 10px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ article.title }}</h5>
-                                        <p class="card-text">{{ article.description|truncatechars:30 }}</p>
-                                        <a href="{% url 'article details' article.id %}"
-                                           class="btn btn-outline-primary btn-sm">Details</a>
-                                        {% if is_owner %}
-                                            <a href="{% url 'edit article' article.id %}"
-                                               class="btn btn-outline-secondary btn-sm">Edit</a>
-                                            <a href="{% url 'delete article' article.id %}"
-                                               class="btn btn-outline-danger btn-sm">Delete</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endfor %}
+                {% if request.user.is_staff %}
+                    <div class="py-4 px-4">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="mb-0">Recent articles</h5>
                         </div>
-                    {% endif %}
+                        {% if not articles %}
+                            <p>No articles yet..</p>
+                        {% else %}
+                            <div class="row">
+                                {% for article in articles %}
+                                    <div class="card" style="width: 18rem; margin: 10px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ article.title }}</h5>
+                                            <p class="card-text">{{ article.description|truncatechars:30 }}</p>
+                                            <a href="{% url 'article details' article.id %}"
+                                               class="btn btn-outline-primary btn-sm">Details</a>
+                                            {% if is_owner %}
+                                                <a href="{% url 'edit article' article.id %}"
+                                                   class="btn btn-outline-secondary btn-sm">Edit</a>
+                                                <a href="{% url 'delete article' article.id %}"
+                                                   class="btn btn-outline-danger btn-sm">Delete</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
 
-                </div>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>

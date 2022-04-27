@@ -28,7 +28,8 @@
         <div class="row flex-nowrap justify-content-between align-items-center">
             {% if request.user.is_authenticated %}
                 <div class="col-4 pt-1">
-                    <a class="text-muted" href="{% url 'profile details' request.user.id %}">Pofile | {{ user.profile }}</a>
+                    <a class="text-muted" href="{% url 'profile details' request.user.id %}">Pofile
+                        | {{ user.profile }}</a>
                 </div>
             {% endif %}
             <div class="col-4 text-center">
@@ -45,13 +46,15 @@
     </header>
 
     <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-            <a class="p-2 text-muted" href="{% url 'show home' %}">Home</a>
-            <a class="p-2 text-muted" href="{% url 'dashboard' %}">All News</a>
-            <a class="p-2 text-muted" href="{% url 'categories' %}">Categories</a>
-            <a class="p-2 text-muted" href="{% url 'create article' %}">Add Article</a>
-            <a class="p-2 text-muted" href="{% url 'add photo' %}">Add photos</a>
-        </nav>
+            <nav class="nav d-flex justify-content-between">
+                <a class="p-2 text-muted" href="{% url 'show home' %}">Home</a>
+                <a class="p-2 text-muted" href="{% url 'dashboard' %}">All News</a>
+                <a class="p-2 text-muted" href="{% url 'categories' %}">Categories</a>
+                {% if request.user.is_staff %}
+                <a class="p-2 text-muted" href="{% url 'create article' %}">Add Article</a>
+                <a class="p-2 text-muted" href="{% url 'add photo' %}">Add photos</a>
+                {% endif %}
+            </nav>
     </div>
     {% block page_content %}
 

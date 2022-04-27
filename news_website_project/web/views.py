@@ -14,7 +14,7 @@ class HomeView(TemplateView):
         return context
 
 
-class AllNewsView(LoginRequiredMixin, ListView):
+class AllNewsView(ListView):
     template_name = 'web/Dashboard.html'
     model = Article
     context_object_name = 'articles'

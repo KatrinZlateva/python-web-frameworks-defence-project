@@ -39,7 +39,9 @@ class ArticleDetailsView(LoginRequiredMixin, DetailView):
         return context
 
 
-class EditArticleView(UpdateView):
+class EditArticleView(UserAccessMixin, UpdateView):
+    permission_required = 'articles.edit_article'
+
     template_name = 'articles/Edit_Article.html'
     form_class = EditArticleForm
     model = Article
@@ -64,7 +66,7 @@ def delete_article(request, pk):
     return render(request, 'articles/Delete_Article.html', context)
 
 
-class AddCommentView(CreateView):
+class AddCommentView(LoginRequiredMixin, CreateView):
     model = Comment
     template_name = 'articles/Add_Comment.html'
     form_class = AddCommentForm
@@ -81,7 +83,7 @@ class AddCommentView(CreateView):
         return kwargs
 
 
-class EditCommentView(UpdateView):
+class EditCommentView(LoginRequiredMixin, UpdateView):
     model = Comment
     template_name = 'articles/Edit_Comment.html'
     form_class = EditCommentForm
@@ -92,7 +94,7 @@ class EditCommentView(UpdateView):
         return reverse_lazy('article details', kwargs={'pk': self.object.article_id})
 
 
-class DeleteCommentView(DeleteView):
+class DeleteCommentView(LoginRequiredMixin, DeleteView):
     template_name = 'articles/Delete_Comment.html'
     form_class = DeleteCommentForm
     model = Comment
@@ -107,7 +109,9 @@ class DeleteCommentView(DeleteView):
         return context
 
 
-class AddPhotoView(CreateView):
+class AddPhotoView(UserAccessMixin, CreateView):
+    permission_required = 'articles.add_photo'
+
     template_name = 'articles/Add_photo.html'
     model = Photo
     form_class = PhotoCreateForm

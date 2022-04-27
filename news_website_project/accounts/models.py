@@ -6,7 +6,6 @@ from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 
 from news_website_project.accounts.managers import NewsUserManager
-from news_website_project.accounts.validators import MinDateValidator, MaxDateValidator, validate_only_letters
 
 
 class NewsUser(AbstractBaseUser, PermissionsMixin):
@@ -51,8 +50,6 @@ class Profile(models.Model):
         max_length=FIRST_NAME_MAX_LEN,
         validators=(
             MinLengthValidator(FIRST_NAME_MIN_LEN),
-            RegexValidator('^[A-Za-z]*$',
-                           message='Ensure the name contains only letters.'),
         )
     )
 
@@ -60,7 +57,6 @@ class Profile(models.Model):
         max_length=LAST_NAME_MAX_LEN,
         validators=(
             MinLengthValidator(LAST_NAME_MIN_LEN),
-            validate_only_letters,
         )
     )
 

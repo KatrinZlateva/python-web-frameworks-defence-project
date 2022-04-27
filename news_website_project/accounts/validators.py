@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
@@ -22,7 +24,8 @@ class MaxDateValidator:
             raise ValidationError(f'Date must be earlier than {self.max_date}')
 
 
-def validate_only_letters(value):
-    for ch in value:
-        if not ch.isalpha():
-            raise ValidationError('Value must contain only letters')
+def validate_year(value):
+    year = value.year
+    current_year = date.today().year
+    if year < 1920 or year > int(current_year):
+        raise ValidationError(f'Year must be between 1920 and {current_year}.')

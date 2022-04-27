@@ -34,5 +34,5 @@ class UserAccessMixin(PermissionRequiredMixin):
         if not self.request.user.is_authenticated:
             return redirect_to_login(self.request.get_full_path(),self.get_login_url())
         if not self.has_permission():
-            return redirect('show home')
+            return redirect('401 page')
         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)

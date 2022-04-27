@@ -20,14 +20,6 @@ class CreateProfileView(CreateView):
             return self.success_url
         return super().get_success_url()
 
-    # def form_valid(self, form):
-    #     form.save()
-    #     email = self.request.POST['email']
-    #     password = self.request.POST['password1']
-    #     user = authenticate(email=email, password=password)
-    #     login(self.request, user)
-    #     return HttpResponseRedirect(self.get_success_url)
-
 
 class UserLoginView(LoginView):
     template_name = 'accounts/Login.html'
