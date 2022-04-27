@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <main class="container">
+        <div class="p-4 p-md-5 mb-4 text-black rounded bg-light">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 fst-italic">{{ category.name }}</h1>
+                <p class="lead my-3">Check out all news related to {{ category.name }}!</p>
+            </div>
+        </div>
+         <div class="row mb-2">
+            <!--First Article-->
+            {% for article in articles %}
+                <div class="col-md-6">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">{{ article.category }}</strong>
+                            <h3 class="mb-0">{{ article.title }}</h3>
+                            <div class="mb-1 text-muted">{{ article.published_date }}</div>
+                            <p class="card-text mb-auto">{{ article.description|truncatechars:100}}</p>
+                            {% if not request.user.is_authenticated %}
+                            <a href="{% url 'create profile' %}" class="stretched-link">Login to read the whole article</a>
+                             {% else %}
+                            <a href="{% url 'article details' article.id %}" class="stretched-link">Continue reading</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

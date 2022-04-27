@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_filters %}
+{% block page_content %}
+<div class="container rounded bg-white">
+        <div class="container col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="form-signin">
+                    <h4 class="text-center">Edit Profile</h4>
+                </div>
+                <form method="POST" action="{% url 'edit profile' request.user.id %}">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="mt-3 text-center">
+                    <button class="btn btn-lg btn-outline-primary" type="submit">Save Profile Changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

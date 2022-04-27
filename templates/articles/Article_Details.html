@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <section class="mbr-section content4 cid-qv5zj5r8jw" id="">
+        <div class="container">
+            <div class="media-container-row">
+                <div class="title col-12 col-md-8">
+                    <h4 class="align-center pb-3 mbr-fonts-style display-4">
+                        {{ article.title }}
+                    </h4>
+                    <p>Published by: <a href="{% url 'profile details' article.user_id %}">{{ full_name }}</a>
+                        on {{ article.published_date }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mbr-section content6 cid-qv5zlioaYy">
+        <div class="container">
+
+            <div class="col-12 col-md-8">
+                <div class="media-container-row">
+                    <div class="mbr-figure" style="width: 120%;">
+                        <img src='{{ article.main_photo }}' align="left" width="150"
+                             alt="Mobirise" title=""
+                             media-simple="true">
+                        <BR CLEAR=”left”/>
+                    </div>
+                    <div class="media-content">
+                        <div class="mbr-section-text">
+                            <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                                {{ article.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="py-4 px-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="mb-0">Article photos</h2><a href="#" class="btn btn-link text-muted">Show all</a>
+    </div>
+    <br>
+    <div class="row">
+        {% if not photos %}
+            <p>No photos yet</p>
+        {% else %}
+            {% for photo in photos %}
+                <div class="col-lg-3 col-md-4 col-6">
+                    <img class="img-fluid img-thumbnail" src="{{ photo.photo }}" alt="" height="300" width="400">
+                    {% if is_owner %}
+                        <a href="{% url 'delete photo' photo.id %}" class="d-block mb-4 h-100">Delete Photo</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div class="container" style="padding: 20px">
+        <h2>Comments</h2>
+        {% if not comments %}
+            <p>No comments yet..</p>
+        {% else %}
+            {% for comment in comments %}
+                <div class="d-flex justify-content-md-between row">
+                    <div class="col-md-8">
+                        <div class="d-flex flex-column comment-section">
+
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row user-info">
+                                    <div class="d-flex flex-column justify-content-start ml-2">
+                                        <h5
+                                                class="d-block font-weight-bold name">{{ comment.author }}</h5>
+                                        <span class="date text-black-50">Shared publicly - {{ comment.date_added }}</span>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">{{ comment.body }}</p>
+                                    {% if comment.user_id == request.user.id %}
+                                        <a href="{% url 'edit comment' comment.id %}"
+                                           class="btn btn-sm btn-outline-secondary">Edit </a>
+                                        <a href="{% url 'delete comment' comment.id %}"
+                                           class="btn btn-sm btn-outline-secondary">Delete</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+        <div>
+            <a href="{% url 'add comment' article.pk %}" class="btn btn-outline-primary btn-md">Add comment</a>
+        </div>
+        <!--End of First comment-->
+    </div>
+{% endblock %}

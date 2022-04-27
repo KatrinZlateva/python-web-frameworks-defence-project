@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <main class="container">
+        <div class="p-4 p-md-5 mb-4 text-black rounded bg-light">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 fst-italic">Categories</h1>
+                <p class="lead my-3">Check out our amazing cateogories and see only the News that comply with your interests!</p>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <!--First Article-->
+            {% for category in categories %}
+                <div class="col-md-6">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-100 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <h3 class="mb-0">{{ category.name }}</h3>
+                            <p>Read more about {{ category.name }} <a href="{% url 'category' category.id %}" class="stretched-link">here</a>! </p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+    <div class="row py-5 px-4">
+        <div class="container">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3">
+                            <img src="{{ profile.picture }}" width="140" class=""
+                                 alt="{% static 'images/avatar-1577909_640.png' %}">
+                            <h4 class="mt-0 mb-0">{{ profile.full_name }}</h4>
+                            <h6 class="mt-0 mb-0">Date of birth: {{ profile.date_of_birth }}</h6>
+                            <h6 class="mt-0 mb-0">Gender: {{ profile.gender }}</h6>
+                            {% if is_owner %}
+                                <div>
+                                    <a href="{% url 'edit profile' request.user.id %}"
+                                       class="btn btn-outline-secondary btn-sm btn-block m-2">Edit profile</a>
+                                    <a href="{% url 'delete user' request.user.id %}"
+                                       class="btn btn-outline-danger btn-sm btn-block m-2">Delete profile</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3">
+                    <h5 class="mb-0">About</h5>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">{{ profile.description }}</p>
+                    </div>
+                </div>
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="mb-0">Recent articles</h5>
+                    </div>
+                    {% if not articles %}
+                        <p>No articles yet..</p>
+                    {% else %}
+                        <div class="row">
+                            {% for article in articles %}
+                                <div class="card" style="width: 18rem; margin: 10px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ article.title }}</h5>
+                                        <p class="card-text">{{ article.description|truncatechars:30 }}</p>
+                                        <a href="{% url 'article details' article.id %}"
+                                           class="btn btn-outline-primary btn-sm">Details</a>
+                                        {% if is_owner %}
+                                            <a href="{% url 'edit article' article.id %}"
+                                               class="btn btn-outline-secondary btn-sm">Edit</a>
+                                            <a href="{% url 'delete article' article.id %}"
+                                               class="btn btn-outline-danger btn-sm">Delete</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
