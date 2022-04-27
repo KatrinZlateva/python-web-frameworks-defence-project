@@ -30,7 +30,6 @@
                         <p class="font-italic mb-0">{{ profile.description }}</p>
                     </div>
                 </div>
-                {% if request.user.is_staff %}
                     <div class="py-4 px-4">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="mb-0">Recent articles</h5>
@@ -57,10 +56,7 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-
                     </div>
-                {% endif %}
-
             </div>
         </div>
     </div>

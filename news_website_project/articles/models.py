@@ -40,20 +40,12 @@ class Article(models.Model):
         on_delete=models.CASCADE,
     )
 
-    likes = models.ManyToManyField(
-        UserModel,
-        related_name='article_post'
-    )
-
     category = models.CharField(
         max_length=CATEGORY_MAX_LEN,
     )
 
     main_photo = models.URLField(
     )
-
-    def total_likes(self):
-        return self.likes.count()
 
     def __str__(self):
         return f'{self.title}  |  {self.user}'
