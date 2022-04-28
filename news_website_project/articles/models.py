@@ -55,11 +55,6 @@ class Photo(models.Model):
 
     photo = models.URLField()
 
-    user = models.ForeignKey(
-        UserModel,
-        on_delete=models.CASCADE,
-    )
-
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
