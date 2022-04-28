@@ -1,7 +1,6 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
@@ -118,8 +117,8 @@ class ArticleViewsTests(TestCase):
         user, _ = self.__create_valid_user_and_profile()
         self.client.login(**self.VALID_USER_CREDENTIALS)
         article = self.__create_article(user)
-        comment = self.__create_comment(article, user)
-        photo = Photo.objects.create(**{
+        self.__create_comment(article, user)
+        Photo.objects.create(**{
             'photo': 'https:\\my-test-photo.it',
             'article': article
         })
@@ -130,3 +129,5 @@ class ArticleViewsTests(TestCase):
         self.assertIsNone(articles)
         self.assertIsNone(comments)
         self.assertIsNone(photos)
+
+

@@ -1,11 +1,8 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-
-from news_website_project.accounts.forms import CreateProfileForm
 from news_website_project.accounts.models import Profile
 from news_website_project.articles.models import Article
 
@@ -85,4 +82,3 @@ class ProfileDetailsViewTests(TestCase):
         article = self.__create_article(user)
         response = self.__get_response_for_profile(profile)
         self.assertEqual([article], list(response.context_data['articles']))
-
