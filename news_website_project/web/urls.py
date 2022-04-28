@@ -7,5 +7,4 @@ urlpatterns = [
     path('all-news/', AllNewsView.as_view(), name='dashboard'),
     path('categories/', CategoriesView.as_view(), name='categories'),
     path('categories/<int:pk>', CategoryArticlesView.as_view(), name='category'),
-    # path('categories/<str:cats>', category_view, name='category view'),
 ]

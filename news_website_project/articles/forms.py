@@ -1,17 +1,17 @@
 from django import forms
 
 from news_website_project.articles.models import Article, Category, Photo, Comment
-from news_website_project.common.helpers import BootstrapFormMixin
+from news_website_project.common.mixins import BootstrapFormMixin
 
 choices = Category.objects.all().values_list('name', 'name')
 choice_list = []
 for item in choices:
     choice_list.append(item)
 
-articles = Article.objects.all().values_list('title', 'title')
-article_list = []
-for item in articles:
-    article_list.append(item)
+# articles = Article.objects.all().values_list('title', 'title')
+# article_list = []
+# for item in articles:
+#     article_list.append(item)
 
 
 class CreateArticleForm(BootstrapFormMixin, forms.ModelForm):
@@ -64,6 +64,8 @@ class DeleteArticleForm(BootstrapFormMixin, forms.ModelForm):
             field.widget.attrs['readonly'] = 'readonly'
 
     def save(self, commit=True):
+        article_photos = Photo.objects.filter(article__exact=self.instance.title)
+        article_photos.delete()
         self.instance.delete()
         return self.instance
 
@@ -87,6 +89,10 @@ class PhotoCreateForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Photo
+        articles = Article.objects.all().values_list('title', 'title')
+        article_list = []
+        for item in articles:
+            article_list.append(item)
         exclude = ['user']
         widgets = {
             'article': forms.Select(choices=article_list, attrs={

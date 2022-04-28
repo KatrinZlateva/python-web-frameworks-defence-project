@@ -60,10 +60,10 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
     )
 
-    article = models.CharField(
-        max_length=ARTICLE_MAX_LEN,
-        null=False,
-        blank=False,
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+
     )
 
 

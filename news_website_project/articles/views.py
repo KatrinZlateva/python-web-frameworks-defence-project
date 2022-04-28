@@ -7,7 +7,7 @@ from news_website_project.accounts.models import Profile
 from news_website_project.articles.forms import CreateArticleForm, EditArticleForm, DeleteArticleForm, PhotoCreateForm, \
     AddCommentForm, EditCommentForm, DeleteCommentForm, DeletePhotoForm
 from news_website_project.articles.models import Article, Photo, Comment
-from news_website_project.common.helpers import UserAccessMixin
+from news_website_project.common.mixins import UserAccessMixin
 
 
 # @permissions_required(required_permissions=['articles.create_adticle'])

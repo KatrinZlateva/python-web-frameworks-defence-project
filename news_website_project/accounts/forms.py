@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from news_website_project.accounts.models import Profile, NewsUser
 from news_website_project.accounts.validators import validate_year
 from news_website_project.articles.models import Article
-from news_website_project.common.helpers import BootstrapFormMixin
+from news_website_project.common.mixins import BootstrapFormMixin
 
 
 class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
