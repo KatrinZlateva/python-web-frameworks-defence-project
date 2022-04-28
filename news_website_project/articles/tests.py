@@ -109,26 +109,24 @@ class ArticleViewsTests(TestCase):
         article = self.__create_article(user)
         photo = Photo.objects.create(**{
             'photo': 'https:\\my-test-photo.it',
-            'user': user,
             'article': article
         })
         response = self.__get_response_for_article(article)
         self.assertListEqual([photo], list(response.context['photos']))
 
-    # def test_delete_article__and_all_comments_and_photos_related_to_it(self):
-    #     user, _ = self.__create_valid_user_and_profile()
-    #     self.client.login(**self.VALID_USER_CREDENTIALS)
-    #     article = self.__create_article(user)
-    #     comment = self.__create_comment(article, user)
-    #     photo = Photo.objects.create(**{
-    #         'photo': 'https:\\my-test-photo.it',
-    #         'user': user,
-    #         'article': article
-    #     })
-    #     article.delete()
-    #     articles = Article.objects.first()
-    #     photos = Photo.objects.first()
-    #     comments = Comment.objects.first()
-    #     self.assertIsNone(articles)
-    #     self.assertIsNone(comments)
-    #     self.assertIsNone(photos)
+    def test_delete_article__and_all_comments_and_photos_related_to_it(self):
+        user, _ = self.__create_valid_user_and_profile()
+        self.client.login(**self.VALID_USER_CREDENTIALS)
+        article = self.__create_article(user)
+        comment = self.__create_comment(article, user)
+        photo = Photo.objects.create(**{
+            'photo': 'https:\\my-test-photo.it',
+            'article': article
+        })
+        article.delete()
+        articles = Article.objects.first()
+        photos = Photo.objects.first()
+        comments = Comment.objects.first()
+        self.assertIsNone(articles)
+        self.assertIsNone(comments)
+        self.assertIsNone(photos)
