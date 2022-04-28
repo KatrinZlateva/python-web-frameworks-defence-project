@@ -51,7 +51,6 @@ class Article(models.Model):
 
 
 class Photo(models.Model):
-    ARTICLE_MAX_LEN = 50
 
     photo = models.URLField()
 

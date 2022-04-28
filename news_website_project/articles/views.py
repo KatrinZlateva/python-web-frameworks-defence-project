@@ -32,15 +32,15 @@ class ArticleDetailsView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['full_name'] = Profile.objects.get(user_id=self.object.user_id)
-        photos = Photo.objects.filter(article__exact=self.object.title)
+        photos = Photo.objects.filter(article__exact=self.object.id)
         context['photos'] = photos
         context['comments'] = Comment.objects.filter(article_id=self.object.id)
         context['is_owner'] = self.object.user == self.request.user
         return context
 
 
-class EditArticleView(UserAccessMixin, UpdateView):
-    permission_required = 'articles.edit_article'
+class EditArticleView(UpdateView):
+    # permission_required = 'articles.edit_article'
 
     template_name = 'articles/Edit_Article.html'
     form_class = EditArticleForm
