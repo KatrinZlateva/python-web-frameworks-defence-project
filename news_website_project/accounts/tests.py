@@ -1,12 +1,13 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 
+from news_website_project.accounts.forms import CreateProfileForm
 from news_website_project.accounts.models import Profile
 from news_website_project.articles.models import Article
-
 
 UserModel = get_user_model()
 
@@ -60,13 +61,6 @@ class ProfileDetailsViewTests(TestCase):
         _, profile = self.__create_valid_user_and_profile()
         self.client.get(reverse('profile details', kwargs={'pk': profile.pk}))
         self.assertTemplateUsed('accounts/Profile_Details.html')
-
-    # def test_when_opening_not_existing_profile__expect_404(self):
-    #     response = self.client.get(reverse('profile details', kwargs={
-    #         'pk': 1,
-    #     }))
-    #
-    #     self.assertEqual(404, response.status_code)
 
     def test_when_user_is_owner__expect_is_owner_to_be_true(self):
         _, profile = self.__create_valid_user_and_profile()

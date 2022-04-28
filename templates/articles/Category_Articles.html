@@ -17,11 +17,7 @@
                             <h3 class="mb-0">{{ article.title }}</h3>
                             <div class="mb-1 text-muted">{{ article.published_date }}</div>
                             <p class="card-text mb-auto">{{ article.description|truncatechars:100}}</p>
-                            {% if not request.user.is_authenticated %}
-                            <a href="{% url 'create profile' %}" class="stretched-link">Login to read the whole article</a>
-                             {% else %}
                             <a href="{% url 'article details' article.id %}" class="stretched-link">Continue reading</a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,6 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 
 from news_website_project.accounts.models import Profile
-from news_website_project.articles.validators import MaxSizeInMbValidator
 
 UserModel = get_user_model()
 
@@ -48,13 +47,11 @@ class Article(models.Model):
     )
 
     def __str__(self):
-        return f'{self.title}  |  {self.user}'
+        return f'{self.title}'
 
 
 class Photo(models.Model):
     ARTICLE_MAX_LEN = 50
-    FILE_MAX_SIZE_IN_MB = 10
-    UPLOAD_TO_DIR = 'article_photos/'
 
     photo = models.URLField()
 
@@ -95,11 +92,6 @@ class Comment(models.Model):
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
-    )
-
-    likes = models.ManyToManyField(
-        UserModel,
-        default=0,
     )
 
     user = models.ForeignKey(

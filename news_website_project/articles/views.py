@@ -16,7 +16,7 @@ class CreateArticleView(UserAccessMixin, CreateView):
 
     template_name = 'articles/Create_Article.html'
     form_class = CreateArticleForm
-    success_url = reverse_lazy('show home')
+    success_url = reverse_lazy('dashboard')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
