@@ -8,3 +8,9 @@ def validate_year(value):
     current_year = date.today().year
     if year < 1920 or year > int(current_year):
         raise ValidationError(f'Year must be between 1920 and {current_year}.')
+
+
+def validate_only_characters(value):
+    for ch in value:
+        if not ch.isalpha():
+            raise ValidationError('The name must contain only letters.')

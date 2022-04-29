@@ -1,9 +1,11 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
 from django.urls import reverse
 from news_website_project.accounts.models import Profile
+from news_website_project.accounts.validators import validate_year, validate_only_characters
 from news_website_project.articles.models import Article, Comment
 
 UserModel = get_user_model()
@@ -111,10 +113,10 @@ class ProfileDetailsViewTests(TestCase):
         updated_user_profile = Profile.objects.get(pk=user.pk)
         self.assertEqual('Jimmy', updated_user_profile.first_name)
 
-    def test_profile_details__when_wrong_url_used_expect_404(self):
+    def test_profile_details__when_wrong_url_used_expect_302(self):
         user = self.__create_user(**self.VALID_USER_CREDENTIALS)
         response = self.client.get('accounts/profile/detailz/1')
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_delete_profile__delete_all_articles_or_comments_added_by_the_user(self):
         user, profile = self.__create_valid_user_and_profile()
@@ -128,3 +130,19 @@ class ProfileDetailsViewTests(TestCase):
         self.assertIsNone(artciels)
         self.assertIsNone(comments)
         self.assertIsNone(profiles)
+
+    def test_year_validator__throws_error_with_incorrect_year(self):
+        year = date(1500, 3, 11)
+        self.assertRaises(ValidationError, validate_year, year)
+
+    def test_only_characters_validator__throws_error_with_number(self):
+        name = 'Brun0'
+        self.assertRaises(ValidationError, validate_only_characters, name)
+
+    def test_only_characters_validator__throws_error_with_special_symbol(self):
+        name = 'Brun#'
+        self.assertRaises(ValidationError, validate_only_characters, name)
+
+    def test_only_characters_validator__throws_error_with_space(self):
+        name = 'Brun o'
+        self.assertRaises(ValidationError, validate_only_characters, name)
