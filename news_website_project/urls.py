@@ -13,4 +13,5 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login user'),
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('show home')), name='logout user'),
     path('401/', TemplateView.as_view(template_name='web/401_error.html'), name='401 page'),
+    path('404/', TemplateView.as_view(template_name='web/404_error.html'), name='404 page'),
 ]

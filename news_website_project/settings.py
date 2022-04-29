@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'news_website_project.middlewares.handle_exceptions',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

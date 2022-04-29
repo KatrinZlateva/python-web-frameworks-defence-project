@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView
 
 from news_website_project.articles.models import Article, Category
@@ -41,3 +42,7 @@ class CategoryArticlesView(DetailView):
         articles = Article.objects.filter(category__exact=self.object.name).order_by('-published_date')
         context['articles'] = articles
         return context
+
+
+def error_404(request):
+    return redirect(reverse_lazy('404 page'))
