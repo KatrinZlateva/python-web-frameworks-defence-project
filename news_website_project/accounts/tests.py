@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from news_website_project.accounts.models import Profile
+from news_website_project.accounts.models import Profile, NewsUser
 from news_website_project.articles.models import Article
 
 UserModel = get_user_model()
@@ -82,3 +82,25 @@ class ProfileDetailsViewTests(TestCase):
         article = self.__create_article(user)
         response = self.__get_response_for_profile(profile)
         self.assertEqual([article], list(response.context_data['articles']))
+
+    def test_edit_form_works_correctly(self):
+        user, profile = self.__create_valid_user_and_profile()
+        self.client.login(**self.VALID_USER_CREDENTIALS)
+        response = self.client.post(reverse('edit profile', kwargs={'pk': user.pk}), data={
+            'pk': user.pk,
+            'first_name': 'Jimmy',
+            'last_name': 'Doe',
+            'gender': Profile.MALE,
+            'date_of_birth': '1995-03-11',
+            'picture': 'http://test-pic.com'
+        })
+        updated_user_profile = Profile.objects.get(pk=user.pk)
+        self.assertEqual('Jimmy', updated_user_profile.first_name)
+
+    def test_profile_details__when_wrong_url_used_expect_404(self):
+        user = self.__create_user(**self.VALID_USER_CREDENTIALS)
+        response = self.client.get('accounts/profile/detailz/1')
+        self.assertEqual(response.status_code, 404)
+
+
+

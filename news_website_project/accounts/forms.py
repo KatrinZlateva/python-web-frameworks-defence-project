@@ -80,6 +80,21 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    def clean(self):
+        super(EditProfileForm, self).clean()
+        first_name = self.cleaned_data['first_name']
+        last_name = self.cleaned_data['last_name']
+
+        for ch in first_name:
+            if not ch.isalpha():
+                self._errors['first_name'] = self.error_class(['The name must contain only letters.'])
+
+        for ch in last_name:
+            if not ch.isalpha():
+                self._errors['last_name'] = self.error_class(['The name must contain only letters.'])
+
+        return self.cleaned_data
+
     class Meta:
         model = Profile
         exclude = ['email', 'user']

@@ -131,3 +131,5 @@ class ArticleViewsTests(TestCase):
         self.assertIsNone(photos)
 
 
+
+
