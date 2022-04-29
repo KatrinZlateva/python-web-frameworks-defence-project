@@ -7,7 +7,7 @@
                 <div class="form-signin">
                     <h4 class="text-center">Create Article</h4>
                 </div>
-                <form method="POST" action="{% url 'create article' %}">
+                <form method="POST" action="{% url 'create article' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="mt-3 text-center">

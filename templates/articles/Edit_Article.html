@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load crispy_forms_filters %}
 {% block page_content %}
 <div class="container rounded bg-white">
         <div class="container col-md-5 border-right">
@@ -6,11 +7,11 @@
                 <div class="form-signin">
                     <h4 class="text-center">Edit Article</h4>
                 </div>
-                <form method="POST" action="">
+                <form method="POST" action="" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form }}
+                    {{ form|crispy }}
                     <div class="mt-3 text-center">
-                    <button class="btn btn-lg btn-primary" type="submit">Save Article Changes</button>
+                    <button class="btn btn-lg btn-outline-primary" type="submit">Save Article Changes</button>
                 </div>
                 </form>
             </div>

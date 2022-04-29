@@ -2,10 +2,10 @@
 {% load static %}
 {% block page_content %}
     <main class="container">
-        <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <div class="p-4 p-md-5 mb-4 text-black rounded" id="error_template">
             <div class="col-md-6 px-0">
                 <h1 class="display-4 fst-italic">Oops..! You are not authorized to do this action!</h1>
-                <p class="lead my-3 fst-italic">Get back to <a href="{% url 'show home' %}">home</a>.</p>
+                <p class="lead my-3 fst-italic">Don't worry, this your way back to <a href="{% url 'show home' %}">home</a>.</p>
             </div>
         </div>
     </main>

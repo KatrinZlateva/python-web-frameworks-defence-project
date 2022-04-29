@@ -21,7 +21,7 @@
             <div class="col-12 col-md-8">
                 <div class="media-container-row">
                     <div class="mbr-figure" style="width: 120%;">
-                        <img src='{{ article.main_photo }}' align="left" width="150"
+                        <img src='{{ article.main_photo.url }}' align="left" width="150"
                              alt="Mobirise" title=""
                              media-simple="true">
                         <BR CLEAR=”left”/>
@@ -50,7 +50,7 @@
                 {% else %}
                     {% for photo in photos %}
                         <div class="col-lg-3 col-md-4 col-6">
-                            <img class="img-fluid img-thumbnail" src="{{ photo.photo }}" alt="" height="300"
+                            <img class="img-fluid img-thumbnail" src="{{ photo.photo.url }}" alt="" height="300"
                                  width="400">
                             {% if is_owner %}
                                 <a href="{% url 'delete photo' photo.id %}" class="d-block mb-4 h-100">Delete Photo</a>

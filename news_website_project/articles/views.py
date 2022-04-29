@@ -56,7 +56,8 @@ def delete_article(request, pk):
         form = DeleteArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
             form.save()
-            return redirect('show home')
+
+            return redirect(reverse_lazy('profile details', kwargs={'pk': request.user.id}))
     else:
         form = DeleteArticleForm(instance=article)
 

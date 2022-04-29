@@ -34,7 +34,7 @@ class CreateArticleForm(BootstrapFormMixin, forms.ModelForm):
             'category': forms.Select(choices=choice_list, attrs={
                 'class': 'form-control',
             }),
-            'main_photo': forms.URLInput(attrs={'placeholder': 'Photo URL'}),
+            'main_photo': forms.FileInput(attrs={'placeholder': 'Photo URL'}),
             'title': forms.TextInput(attrs={'placeholder': 'Add Title'})
         }
 
@@ -64,7 +64,7 @@ class DeleteArticleForm(BootstrapFormMixin, forms.ModelForm):
             field.widget.attrs['readonly'] = 'readonly'
 
     def save(self, commit=True):
-        article_photos = Photo.objects.filter(article__exact=self.instance.title)
+        article_photos = Photo.objects.filter(article__exact=self.instance.pk)
         article_photos.delete()
         self.instance.delete()
         return self.instance

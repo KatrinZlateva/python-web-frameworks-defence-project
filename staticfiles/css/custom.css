@@ -5,3 +5,7 @@
 #dashboard {
     background-color: antiquewhite;
 }
+
+#error_template {
+    background-color: lightyellow;
+}

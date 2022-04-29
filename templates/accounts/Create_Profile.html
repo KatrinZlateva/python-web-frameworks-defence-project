@@ -7,7 +7,7 @@
                 <div class="form-signin">
                     <h4 class="text-center">Create Profile</h4>
                 </div>
-                <form method="POST" action="{% url 'create profile' %}">
+                <form method="POST" action="{% url 'create profile' %}" >
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="mt-3 text-center">

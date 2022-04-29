@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
@@ -18,6 +20,14 @@ class CreateProfileView(CreateView):
         if self.success_url:
             return self.success_url
         return super().get_success_url()
+
+    def form_valid(self, form):
+        form.save()
+        email = self.request.POST['email']
+        password = self.request.POST['password1']
+        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+        login(self.request, user)
+        return redirect(reverse_lazy('show home'))
 
 
 class UserLoginView(LoginView):
