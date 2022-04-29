@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
 from django.urls import reverse
 from news_website_project.accounts.models import Profile
-from news_website_project.accounts.validators import validate_year, validate_only_characters
 from news_website_project.articles.models import Article, Comment
+from news_website_project.common.validators import validate_year, validate_only_characters
 
 UserModel = get_user_model()
 

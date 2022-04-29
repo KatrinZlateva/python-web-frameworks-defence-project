@@ -1,7 +1,7 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView
-
+from django.core.mail import send_mail
 from news_website_project.articles.models import Article, Category
 
 
@@ -44,5 +44,27 @@ class CategoryArticlesView(DetailView):
         return context
 
 
+def contact(request):
+    if request.method == 'POST':
+        message_name = request.POST['message_name']
+        message_email = request.POST['message_email']
+        message = request.POST['message']
+        send_mail(
+            'message from' + message_name,
+            message,
+            message_email,
+            ['katrin.zlateva@gmail.com'],
+        )
+        context = {
+            'message_name': message_name,
+
+        }
+        return render(request, 'web/Contact_us.html', context)
+    else:
+        return render(request, 'web/Contact_us.html')
+
+
 def error_404(request):
     return redirect(reverse_lazy('404 page'))
+
+
