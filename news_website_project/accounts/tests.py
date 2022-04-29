@@ -3,8 +3,8 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from news_website_project.accounts.models import Profile, NewsUser
-from news_website_project.articles.models import Article
+from news_website_project.accounts.models import Profile
+from news_website_project.articles.models import Article, Comment
 
 UserModel = get_user_model()
 
@@ -31,6 +31,11 @@ class ProfileDetailsViewTests(TestCase):
         'main_photo': 'http://another-test-photo.com'
     }
 
+    VALID_COMMENT_DATA = {
+        'body': 'test text',
+        'date_added': date.today(),
+    }
+
     @staticmethod
     def __create_user(**credentials):
         return UserModel.objects.create_user(**credentials)
@@ -53,6 +58,15 @@ class ProfileDetailsViewTests(TestCase):
         )
         article.save()
         return article
+
+    def __create_comment(self, article, user):
+        comment = Comment.objects.create(
+            **self.VALID_COMMENT_DATA,
+            article=article,
+            user=user,
+        )
+        comment.save()
+        return comment
 
     def test_expect_correct_template(self):
         _, profile = self.__create_valid_user_and_profile()
@@ -102,5 +116,15 @@ class ProfileDetailsViewTests(TestCase):
         response = self.client.get('accounts/profile/detailz/1')
         self.assertEqual(response.status_code, 404)
 
-
-
+    def test_delete_profile__delete_all_articles_or_comments_added_by_the_user(self):
+        user, profile = self.__create_valid_user_and_profile()
+        self.client.login(**self.VALID_USER_CREDENTIALS)
+        article = self.__create_article(user)
+        comment = self.__create_comment(article, user)
+        user.delete()
+        artciels = Article.objects.first()
+        comments = Comment.objects.first()
+        profiles = Profile.objects.first()
+        self.assertIsNone(artciels)
+        self.assertIsNone(comments)
+        self.assertIsNone(profiles)
