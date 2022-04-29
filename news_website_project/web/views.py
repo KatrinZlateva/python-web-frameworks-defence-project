@@ -9,15 +9,20 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        articles = list(Article.objects.all())
-        context['articles'] = articles[0:2]
+        articles = list(Article.objects.all().order_by('-published_date'))
+        context['articles'] = articles[0:4]
         return context
 
 
 class AllNewsView(ListView):
     template_name = 'web/Dashboard.html'
     model = Article
-    context_object_name = 'articles'
+
+    def get_context_data(self, **kwargs):
+        context = super(AllNewsView, self).get_context_data()
+        articles = Article.objects.all().order_by('-published_date')
+        context['articles'] = articles
+        return context
 
 
 class CategoriesView(ListView):
@@ -33,6 +38,6 @@ class CategoryArticlesView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryArticlesView, self).get_context_data()
-        articles = Article.objects.filter(category__exact=self.object.name)
+        articles = Article.objects.filter(category__exact=self.object.name).order_by('-published_date')
         context['articles'] = articles
         return context

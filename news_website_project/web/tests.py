@@ -55,10 +55,10 @@ class GeneralViewsTests(TestCase):
         article.save()
         return article
 
-    def test_home_shows_only_2_articles(self):
+    def test_home_shows_only_4_articles(self):
         user, profile = self.__create_valid_user_and_profile()
-        article1 = self.__create_article(user)
-        article2 = Article.objects.create(
+        self.__create_article(user)
+        Article.objects.create(
             title='Test title 2',
             description='test description',
             published_date=date.today(),
@@ -66,7 +66,7 @@ class GeneralViewsTests(TestCase):
             main_photo='http://another-test-photo.com',
             user=user,
         )
-        article3 = Article.objects.create(
+        Article.objects.create(
             title='Test title 3',
             description='test description',
             published_date=date.today(),
@@ -74,7 +74,21 @@ class GeneralViewsTests(TestCase):
             main_photo='http://another-test-photo.com',
             user=user,
         )
+        Article.objects.create(
+            title='Test title 4',
+            description='test description',
+            published_date=date.today(),
+            category='Lifestyle',
+            main_photo='http://another-test-photo.com',
+            user=user,
+        )
+        Article.objects.create(
+            title='Test title 5',
+            description='test description',
+            published_date=date.today(),
+            category='Lifestyle',
+            main_photo='http://another-test-photo.com',
+            user=user,
+        )
         response = self.client.get(reverse('show home'))
-        self.assertEqual(2, len(response.context['articles']))
-
-
+        self.assertEqual(4, len(response.context['articles']))
